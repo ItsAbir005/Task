@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Menu QR Code</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 10px;
+      font-size: 3rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    .subtitle {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 40px;
+      font-size: 1.3rem;
+    }
+    .main-card {
+      background: white;
+      border-radius: 30px;
+      padding: 50px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      margin-bottom: 30px;
+    }
+    .qr-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #f97316;
+      margin-bottom: 20px;
+    }
+    .qr-image {
+      max-width: 500px;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      margin: 20px auto;
+      display: block;
+      border: 4px solid #f97316;
+    }
+    .qr-url {
+      font-size: 1.1rem;
+      color: #666;
+      word-break: break-all;
+      padding: 15px;
+      background: #fef3c7;
+      border-radius: 12px;
+      margin: 20px 0;
+      border-left: 4px solid #f97316;
+    }
+    .download-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .download-btn {
+      display: inline-block;
+      padding: 15px 30px;
+      background: #f97316;
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    .download-btn:hover {
+      background: #ea580c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+    }
+    .instructions {
+      background: white;
+      border-radius: 30px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      margin-bottom: 30px;
+    }
+    .instructions h2 {
+      color: #f97316;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+    .instructions ol {
+      margin-left: 25px;
+      color: #333;
+      line-height: 2;
+      font-size: 1.1rem;
+    }
+    .instructions li {
+      margin-bottom: 15px;
+    }
+    .instructions li strong {
+      color: #f97316;
+    }
+    .info-box {
+      background: #fef3c7;
+      border-left: 4px solid #f97316;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+    .info-box p {
+      color: #92400e;
+      margin: 0;
+      line-height: 1.6;
+    }
+    .instructions-list {
+      margin-top: 30px;
+    }
+    .flow-diagram {
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 30px;
+      margin-top: 30px;
+    }
+    .flow-step {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .flow-number {
+      background: #f97316;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    .flow-text {
+      color: #333;
+      font-size: 1rem;
+    }
+    @media print {
+      body {
+        background: white;
+      }
+      .main-card {
+        box-shadow: none;
+        border: 3px solid #f97316;
+      }
+      .download-section, .instructions, .flow-diagram {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🍽️ Restaurant Menu</h1>
+    <p class="subtitle">Scan to Login & Order</p>
+    
+    <div class="main-card">
+      <div class="qr-title">Scan This QR Code</div>
+      <img src="restaurant-menu.png" alt="Restaurant Menu QR Code" class="qr-image">
+      <div class="qr-url">📱 http://localhost:5173/login</div>
+      
+      <div class="download-section">
+        <a href="restaurant-menu-small.png" download class="download-btn">
+          Download Small (300px)
+        </a>
+        <a href="restaurant-menu.png" download class="download-btn">
+          Download Medium (500px)
+        </a>
+        <a href="restaurant-menu-large.png" download class="download-btn">
+          Download Large (800px)
+        </a>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <h2>📋 How It Works</h2>
+      
+      <div class="flow-diagram">
+        <div class="flow-step">
+          <div class="flow-number">1</div>
+          <div class="flow-text">Customer scans QR code with phone camera</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-number">2</div>
+          <div class="flow-text">Redirected to login page</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-number">3</div>
+          <div class="flow-text">Customer creates account or logs in</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-number">4</div>
+          <div class="flow-text">After login, redirected to menu page</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-number">5</div>
+          <div class="flow-text">Browses menu and adds items to cart</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-number">6</div>
+          <div class="flow-text">Places order and receives confirmation</div>
+        </div>
+      </div>
+
+      <ol class="instructions-list">
+        <li><strong>Print this QR code</strong> and place it at your restaurant entrance, on tables, or at payment counter</li>
+        <li><strong>Customers scan</strong> with their phone's camera app (no special app needed)</li>
+        <li><strong>They're redirected</strong> to the login page</li>
+        <li><strong>New customers</strong> can click "Sign Up" to create an account</li>
+        <li><strong>After login</strong>, they automatically go to the menu page</li>
+        <li><strong>They can browse</strong> the full menu and place orders</li>
+      </ol>
+
+      <div class="info-box">
+        <p><strong>💡 Pro Tips:</strong></p>
+        <p>• Laminate the QR code for durability</p>
+        <p>• Add your restaurant name and logo above the QR code</p>
+        <p>• Include text like "Scan to Order" or "Digital Menu"</p>
+        <p>• Test the QR code before printing multiple copies</p>
+        <p>• Keep the QR code at a good scanning height (eye level)</p>
+        <p>• Place QR codes at multiple locations (entrance, tables, counter)</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
