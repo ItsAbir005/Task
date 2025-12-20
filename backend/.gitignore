@@ -2,3 +2,5 @@
 node_modules/
 #logs
 logs/
+#env files
+.env
