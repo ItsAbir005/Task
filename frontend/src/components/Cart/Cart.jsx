@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useSession } from '../../context/SessionContext';
@@ -6,12 +6,12 @@ import { orderAPI } from '../../services/api';
 import CartItem from './CartItem';
 
 const Cart = () => {
-  const {cart, clearCart } = useCart();
+  const { cart, clearCart } = useCart();
   const { sessionId, customerName, updateCustomerName } = useSession();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showNameInput, setShowNameInput] = useState(!customerName);
-  const [nameInput, setNameInput] = useState(customerName);
+  const [nameInput, setNameInput] = useState(customerName || '');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -24,6 +24,22 @@ const Cart = () => {
   }, [cart]);
 
   const handlePlaceOrder = async () => {
+    console.log('Place Order clicked!'); // Debug log
+    console.log('Session ID:', sessionId); // Debug log
+    console.log('Cart:', cart); // Debug log
+
+    // Validation
+    if (!sessionId) {
+      setError('Session not initialized. Please refresh the page.');
+      return;
+    }
+
+    if (cart.length === 0) {
+      setError('Your cart is empty');
+      return;
+    }
+
+    // Update name if changed
     if (nameInput && nameInput !== customerName) {
       updateCustomerName(nameInput);
     }
@@ -40,7 +56,11 @@ const Cart = () => {
         customerName: nameInput || 'Guest',
       };
 
+      console.log('Sending order data:', orderData); // Debug log
+
       const response = await orderAPI.create(orderData);
+
+      console.log('Order response:', response); // Debug log
 
       clearCart();
       navigate('/order-success', {
@@ -50,8 +70,8 @@ const Cart = () => {
         },
       });
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to place order');
-      console.error('Order error:', err);
+      console.error('Order error:', err); // Debug log
+      setError(err.response?.data?.message || 'Failed to place order. Please try again.');
     } finally {
       setLoading(false);
     }

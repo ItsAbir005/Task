@@ -1,9 +1,14 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSession } from '../context/SessionContext';
 import { orderAPI } from '../services/api';
 
 const MyOrdersPage = () => {
   const { sessionId } = useSession();
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (sessionId) {
@@ -12,8 +17,17 @@ const MyOrdersPage = () => {
   }, [sessionId]);
 
   const fetchOrders = async () => {
-    const response = await orderAPI.getMyOrders(sessionId);
-    setOrders(response.data.orders);
+    try {
+      setLoading(true);
+      const response = await orderAPI.getMyOrders(sessionId);
+      setOrders(response.data.orders);
+      setError('');
+    } catch (err) {
+      setError('Failed to load orders');
+      console.error('Fetch orders error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getStatusColor = (status) => {
