@@ -1,63 +1,26 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
-import ProtectedRoute from './components/ProtectedRoute';
-import Login from './components/Auth/Login';
-import Signup from './components/Auth/Signup';
+import { SessionProvider } from './context/SessionContext';
 import MenuPage from './pages/MenuPage';
 import CartPage from './pages/CartPage';
-import MyOrdersPage from './pages/MyOrdersPage.jsx';
+import MyOrdersPage from './pages/MyOrdersPage';
 import OrderSuccess from './components/Order/OrderSuccess';
 
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
+      <SessionProvider>
         <CartProvider>
           <Routes>
-            {/* Public Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-
-            {/* Protected Routes */}
-            <Route
-              path="/menu"
-              element={
-                <ProtectedRoute>
-                  <MenuPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/cart"
-              element={
-                <ProtectedRoute>
-                  <CartPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/my-orders"
-              element={
-                <ProtectedRoute>
-                  <MyOrdersPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/order-success"
-              element={
-                <ProtectedRoute>
-                  <OrderSuccess />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route path="/" element={<MenuPage />} />
+            <Route path="/menu" element={<MenuPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/my-orders" element={<MyOrdersPage />} />
+            <Route path="/order-success" element={<OrderSuccess />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </CartProvider>
-      </AuthProvider>
+      </SessionProvider>
     </BrowserRouter>
   );
 }

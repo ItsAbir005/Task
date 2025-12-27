@@ -1,6 +1,6 @@
 const express = require('express');
-const { protect } = require('../middleware/auth');
 const router = express.Router();
+
 const menuData = [
   { 
     id: 1, 
@@ -51,8 +51,7 @@ const menuData = [
     image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400"
   }
 ];
-
-router.get('/', protect, (req, res) => {
+router.get('/', (req, res) => {
   try {
     res.status(200).json({
       success: true,
@@ -64,30 +63,6 @@ router.get('/', protect, (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error fetching menu items',
-      error: error.message
-    });
-  }
-});
-router.get('/:id', protect, (req, res) => {
-  try {
-    const item = menuData.find(item => item.id === parseInt(req.params.id));
-    
-    if (!item) {
-      return res.status(404).json({
-        success: false,
-        message: 'Menu item not found'
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      data: item
-    });
-  } catch (error) {
-    console.error('Menu item fetch error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error fetching menu item',
       error: error.message
     });
   }

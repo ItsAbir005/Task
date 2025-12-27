@@ -1,27 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSession } from '../context/SessionContext';
 import { orderAPI } from '../services/api';
 
 const MyOrdersPage = () => {
+  const { sessionId } = useSession();
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchOrders();
-  }, []);
+    if (sessionId) {
+      fetchOrders();
+    }
+  }, [sessionId]);
 
   const fetchOrders = async () => {
-    try {
-      const response = await orderAPI.getMyOrders();
-      setOrders(response.data.orders);
-    } catch (err) {
-      setError('Failed to load orders');
-      console.error('Orders fetch error:', err);
-    } finally {
-      setLoading(false);
-    }
+    const response = await orderAPI.getMyOrders(sessionId);
+    setOrders(response.data.orders);
   };
 
   const getStatusColor = (status) => {
@@ -46,32 +38,20 @@ const MyOrdersPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center gap-4">
           <button
             onClick={() => navigate('/menu')}
             className="text-gray-600 hover:text-gray-800"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <h1 className="text-xl font-bold text-gray-800">My Orders</h1>
         </div>
       </header>
 
-      {/* Content */}
       <main className="max-w-4xl mx-auto px-4 py-6">
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
@@ -98,11 +78,7 @@ const MyOrdersPage = () => {
         ) : (
           <div className="space-y-4">
             {orders.map((order) => (
-              <div
-                key={order._id}
-                className="bg-white rounded-xl shadow-sm p-6"
-              >
-                {/* Order Header */}
+              <div key={order._id} className="bg-white rounded-xl shadow-sm p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="font-semibold text-lg text-gray-800">
@@ -118,31 +94,20 @@ const MyOrdersPage = () => {
                       })}
                     </p>
                   </div>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
-                      order.status
-                    )}`}
-                  >
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
                     {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                   </span>
                 </div>
 
-                {/* Order Items */}
                 <div className="space-y-2 mb-4">
                   {order.items.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between text-sm text-gray-600"
-                    >
-                      <span>
-                        {item.name} x{item.quantity}
-                      </span>
+                    <div key={index} className="flex justify-between text-sm text-gray-600">
+                      <span>{item.name} x{item.quantity}</span>
                       <span>${(item.price * item.quantity).toFixed(2)}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* Order Total */}
                 <div className="border-t pt-3 flex justify-between items-center">
                   <span className="font-semibold text-gray-700">Total</span>
                   <span className="text-xl font-bold text-orange-500">
@@ -150,7 +115,6 @@ const MyOrdersPage = () => {
                   </span>
                 </div>
 
-                {/* Table Number */}
                 {order.tableNumber && (
                   <div className="mt-3 text-sm text-gray-500">
                     Table {order.tableNumber}
