@@ -11,12 +11,10 @@ This application allows restaurants to provide a contactless ordering experience
 
 ### Customer Features
 - **QR Code Scanning** - Scan table-specific QR codes
-- **User Authentication** - Secure signup and login
 - **Cart Management** - Add, remove, and adjust quantities
 - **Responsive Design** - Works on mobile, tablet, and desktop
 
 ### Technical Features
-- JWT-based authentication
 - MongoDB database for data persistence
 - RESTful API architecture
 
@@ -117,39 +115,27 @@ This will create:
 The QR code points to: `http://localhost:5173/login`
 
 When scanned:
-1. Opens the login page directly
-2. Customer can login or click "Sign Up" to create an account
-3. After successful login → Automatically redirected to menu page
-4. Customer can browse menu and place orders
+1. Automatically redirected to menu page
+2. Customer can browse menu and place orders
 
 ## User Flow
 
 1. **Customer scans QR code** placed at restaurant entrance, tables, or counter
-2. **Opens menu page** (`/menu`) in browser
-3. **Redirected to login** if not authenticated
-4. **Login/Signup** with email and password
-5. **Browse menu** by category
-6. **Add items to cart**
-7. **Review cart** and adjust quantities
-8. **Place order** - Order sent to system
-9. **Order confirmation** shown with order ID
-10. **View order history** in "My Orders"
+2. **Browse menu** by category
+3. **Add items to cart**
+4. **Review cart** and adjust quantities
+5. **Place order** - Order sent to system
+6. **Order confirmation** shown with order ID
+17. **View order history** in "My Orders"
 
 ## API Endpoints
 
-### Authentication
-- `POST /api/auth/signup` - Create new user
-- `POST /api/auth/login` - Login user
-
 ### Menu
 - `GET /api/menu` - Get all menu items 
-- `GET /api/menu/:id` - Get single menu item
 
 ### Orders
 - `POST /api/order` - Create new order 
 - `GET /api/order/my-orders` - Get user's orders
-- `GET /api/order/:id` - Get single order 
-- `GET /api/order` - Get all orders 
 
 
 
